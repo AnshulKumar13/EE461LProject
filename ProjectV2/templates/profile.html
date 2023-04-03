@@ -1,0 +1,31 @@
+<div>
+  <head>
+    <title>Welcome {{result}}!</title>
+    <style>
+      body {
+        background-color: rgb(243,191,179);
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/createproject" method="post" style="float: left;">
+      <h2>Create New Project</h2><br>
+      <label for="fname">Project ID</label><br>
+      <input type="text" name="projectid"><br>
+      <label for="fname">Project Name</label><br>
+      <input type="text" name="projectname"><br>
+      <label for="fname">Project Description</label><br>
+      <input type="text" name="projectdesc" style="width: 300px;height: 200px"><br>
+      <input type="submit">
+    </form>
+    <form action="/openproject" method="post" style="float: left;">
+      <h2>Open Existing Project</h2><br>
+      <label for="fname">Project ID</label><br>
+      <input type="text" name="projectid"><br>
+      <input type="submit">
+    </form>
+    <form action="/">
+      <button>Logout</button>
+    </form>
+  </body>
+</div>

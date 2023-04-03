@@ -1,0 +1,29 @@
+<div>
+  <head>
+    <title>Project Manager</title>
+    <h1>Project Name: {{ value['projectname'] }}</h1>
+    <h1>Project ID: {{ value['projectid'] }}</h1>
+    <h1>Project Description: {{ value['projectdesc'] }}</h1>
+  </head>
+  <body>
+    <form action="/checkout/1" method="post" style="float: left;">
+      <h2>Hardware Set 1</h2><br>
+      <h3>Available: {{value['HW1Amount'] }}</h3><br>
+      <h3>Capacity: {{value['HW1Capacity'] }}</h3><br>
+      <label for="fname">Request</label>
+      <input type="number" name="request"><br>
+      <input type="submit">
+    </form>
+    <form action="/checkout/2" method="post" style="float: left;">
+      <h2>Hardware Set 2</h2><br>
+      <h3>Available: {{value['HW2Amount'] }}</h3><br>
+      <h3>Capacity: {{value['HW2Capacity'] }}</h3><br>
+      <label for="fname">Request</label>
+      <input type="number" name="request"><br>
+      <input type="submit">
+    </form>
+    <form action="/profile">
+      <button>Back to Profile</button>
+    </form>
+  </body>
+</div>
