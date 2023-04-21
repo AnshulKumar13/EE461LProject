@@ -41,7 +41,8 @@ def addNewProject(user, projectID, projectName, desc):
             return False
         else:
             newProject = projectsDB[projectID]
-            insert = {"ProjectID":projectID, "ProjectName":projectName, "Users":[user], "Desc":desc}
+            insert = {"ProjectID":projectID, "ProjectName":projectName, "Users":[user], "Desc":desc,
+                      "Checkedout": 0}
             newProject.insert_one(insert)
             return True
         
@@ -77,17 +78,26 @@ def addUserToProject(user, projectID):
         projectsDB[projectID].update_one(query, {"$set": {"Users":doc["Users"]}})
         return True
     
-def checkoutHardware(name, amount):
+def checkoutHardware(name, amount, projectID):
     with MongoClient(dbURL, tlsCAFile = ca) as org:
         hardwareDB = org["Hardware"]
+        projectDB = org["Projects"]
         hardwareCols = hardwareDB.list_collection_names()
         if name not in hardwareCols:
             return False
+        projectCols = projectDB.list_collection_names()
+        if projectID not in projectCols:
+            return False
         doc = hardwareDB[name].find_one()
+        projDoc = projectDB[projectID].find_one()
         if doc["Amount"] < amount:
+            return False
+        if amount < 0 and (projDoc["Checkedout"] + amount < 0):
             return False
         query = {"_id":doc["_id"]}
         hardwareDB[name].update_one(query, {"$set": {"Amount":doc["Amount"] - amount}})
+        query = {"ProjectID":projectID}
+        projectDB[projectID].update_one(query, {"$set": {"Checkedout":projDoc["Checkedout"] + amount}})
         return True
 
 def getHardware(name):

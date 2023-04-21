@@ -77,7 +77,7 @@ def project(name):
 @app.route("/checkout/<num>", methods=["GET","POST"])
 def checkout(num):
     amount = request.form["request"]
-    db.checkoutHardware("HW" + num, int(amount))
+    db.checkoutHardware("HW" + num, int(amount), session["projectid"])
     return redirect("/project/" + session["projectname"])
 
 if __name__ == "__main__":
